@@ -27,7 +27,12 @@ Results are from the **player’s perspective**. `determine_winner(player, compu
 
 ### Agreed plan
 
-Discuss the plan with your local coding agent before implementation. Once you agree, ask it to replace this paragraph with the short plan, preserving the expected results above. Keep the agreement in this file and continue in the same chat.
+1. Keep the supplied interface/server and implement only `determine_winner`: equal moves tie; rock beats scissors, paper beats rock, and scissors beats paper; other valid pairs lose.
+2. Add all nine literal unit outcomes from the table and one real Flask request/result check with the computer choice fixed. Reuse the supplied missing/unsupported-input checks.
+3. Add one Chromium journey using real rules: play Rock against fixed Scissors, then replay with Paper and verify the new loss. Do not stub the rules or repeat every matchup through the browser.
+4. Run the full shared checks and review the diff before browser play. Then inspect actual choices/results, replay and keyboard behavior, and record only performed checks. Keep scoring for a later feature.
+
+Prediction before implementation: Rock against Paper returns `lose`, because Paper beats Rock. This guided walkthrough uses the current coding chat; ChatGPT desktop UI control is unavailable.
 
 ### Checks
 
@@ -44,6 +49,8 @@ Use `unit`, `integration`, and `e2e` pytest markers. Run `.venv/bin/python check
 
 ### Work record
 
-- Issue: add your own issue URL.
-- Implementation: **Not implemented.** The shell is supplied; `game.py` is unfinished.
-- Checks: **Rules not verified.** Supplied request/browser tests cover the shell only. After implementation, record actual full-check results and your browser observations here; put detailed results in the PR. Passing formatting and analysis alone is not evidence of correct rules.
+- Issue: [RPS-001: Play a round](https://github.com/kaw393939/rps-self-paced-trial-1025/issues/1).
+- Implementation: [rule function](game.py), [nine outcomes and real request](tests/test_game.py), and [real-browser round/replay](tests/e2e/test_round.py). The supplied app, interface, fixtures, and shared check configuration are unchanged.
+- Checks: `.venv/bin/python check.py` passed Black, Pylint, 22 non-browser cases, and two actual Chromium cases. The ten new rule/request cases first failed against the unfinished rules. Reviewed the four changed files against this spec, including the untracked tests. Rock/Paper's literal `lose` expectation matches the prediction above.
+- Browser observations through Computer Use in Safari: Rock/Scissors won; Paper/Paper tied; Scissors/Rock lost; replay updated both choices and the result. Option+Tab visibly focused Rock and Enter submitted Rock/Paper, which lost correctly. Plain Tab skipped buttons with this browser's settings. Reopening the printed address avoided Safari's form-resubmission prompt.
+- Trial limit: implementation and commands used the current coding chat and command tool. ChatGPT desktop and Terminal UI control were blocked; no independent student or human review is claimed. Detailed evidence belongs in the linked PR.
